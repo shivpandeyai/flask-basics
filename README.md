@@ -59,6 +59,15 @@ You should see `(venv)` at the beginning of your terminal line.
 pip install flask
 ```
 
+### Step 5: Create .gitignore File
+Create a `.gitignore` file in the root folder with the following content:
+```
+venv/
+__pycache__/
+*.pyc
+.env
+```
+
 ---
 
 ## 📂 Repository Structure

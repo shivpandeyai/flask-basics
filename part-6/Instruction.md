@@ -40,6 +40,8 @@ TASKS = [
 ]
 ```
 
+> **Note:** Data is stored in a Python list (in-memory). All tasks will reset when the server restarts. No database is used in this basic exercise.
+
 ### 4. Jinja2 Features to Use
 
 Practice these Jinja2 features in your templates:
