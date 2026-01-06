@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Founders Waitlist</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      max-width: 500px; margin: 0 auto; padding: 40px 20px; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    h1 { color: #333; text-align: center; margin-bottom: 10px; font-size: 28px; }
+    .subtitle { color: #666; text-align: center; margin-bottom: 30px; font-size: 16px; }
+    input { 
+      width: 100%; padding: 16px; margin: 12px 0; border: 2px solid #e1e5e9; 
+      border-radius: 12px; font-size: 16px; transition: all 0.3s; 
+    }
+    input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+    button { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      color: white; padding: 18px; width: 100%; border: none; 
+      border-radius: 12px; font-size: 18px; font-weight: 600; 
+      cursor: pointer; transition: transform 0.2s; margin-top: 10px;
+    }
+    button:hover { transform: translateY(-2px); }
+    button:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+    .message { 
+      margin-top: 20px; padding: 15px; border-radius: 10px; text-align: center; 
+      font-weight: 500; display: none;
+    }
+    .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    @media (max-width: 480px) { .container { padding: 30px 20px; margin: 20px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Navigation -->
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact Form </a>
+        </nav>
+    <h1>Join the Founders Waitlist</h1>
+    <p class="subtitle">Community for Founders; Build by Founders</p>
+    
+    <form id="founderForm">
+      <input type="text" id="name" placeholder="Your Full Name" required>
+      <input type="tel" id="contact" placeholder="Contact Number" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="text" id="startup" placeholder="About your Startup " not required>
+      <button type="submit" id="submitBtn">Reserve My Spot →</button>
+    </form>
+    
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('founderForm');
+    const message = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // ⚠️ REPLACE WITH YOUR WEB APP URL FROM STEP 2
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwWZlAXOq8K1DHnC4YNT9cutDxibngySX_2SYFMZvw/dev';
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = {
+        name: document.getElementById('name').value,
+        contact: document.getElementById('contact').value,
+        email: document.getElementById('email').value,
+        startup: document.getElementById('startup').value
+      };
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      message.style.display = 'none';
+      
+      try {
+        const response = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          body: JSON.stringify(formData),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+          message.textContent = '✅ Thanks! Your info is saved. We\'ll connect soon.';
+          message.className = 'message success';
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Something went wrong');
+        }
+      } catch (error) {
+        message.textContent = '❌ Oops! Try again or DM directly.';
+        message.className = 'message error';
+        console.error('Form error:', error);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Share My Story →';
+        message.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
