@@ -82,7 +82,14 @@
         <nav>
             <a href="/">Home</a>
             <a href="/about/">About</a>
+            <a href="{{ url_for('categories') }}">Categories</a>
             <a href="/links">URL Builder</a>
+
+            <!-- search form -->
+            <form action="{{ url_for('search_submit') }}" method="post" style="display:inline; margin-left:18px;">
+                <input type="text" name="query" placeholder="Search products or categories" style="padding:6px 8px;">
+                <button type="submit" style="padding:6px 10px;">Search</button>
+            </form>
         </nav>
 
         <h1>Dynamic Routes in Flask</h1>
@@ -126,6 +133,23 @@
             <p><strong>Try it:</strong></p>
             <a href="/user/Alice/post/1">Alice's Post 1</a>
             <a href="/user/Bob/post/2">Bob's Post 2</a>
+        </div>
+
+        <!-- Quick category → product links -->
+        <div class="route-demo">
+            <h3>4. Quick category → product links</h3>
+            <p>Jump directly to a category product detail:</p>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}">Electronics — Laptop (ID 1)</a>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=2) }}">Electronics — Smartphone (ID 2)</a>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=3) }}">Electronics — Tablet (ID 3)</a>
+            <br><br>
+            <a href="{{ url_for('category_product', category_name='electricals', product_id=1) }}">Electricals — LED Bulb (ID 1)</a>
+            <a href="{{ url_for('category_product', category_name='electricals', product_id=2) }}">Electricals — Switch Board (ID 2)</a>
+            <a href="{{ url_for('category_product', category_name='electricals', product_id=3) }}">Electricals — Extension Cord (ID 3)</a>
+            <br><br>
+            <a href="{{ url_for('category_product', category_name='furniture', product_id=1) }}">Furniture — Study Table (ID 1)</a>
+            <a href="{{ url_for('category_product', category_name='furniture', product_id=2) }}">Furniture — Office Chair (ID 2)</a>
+            <a href="{{ url_for('category_product', category_name='furniture', product_id=3) }}">Furniture — Bookshelf (ID 3)</a>
         </div>
 
         <div class="try-it">

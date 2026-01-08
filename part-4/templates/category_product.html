@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category_name }} - Product {{ product_id }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        nav {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f0f4f8;
+            border-radius: 8px;
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            color: #2d3748;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #667eea;
+        }
+        .breadcrumb {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .breadcrumb span {
+            color: #2d3748;
+            font-weight: bold;
+        }
+        .category-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .product-details {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #4a5568;
+        }
+        .detail-value {
+            color: #2d3748;
+        }
+        .price {
+            color: #48bb78;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .description {
+            color: #718096;
+            font-style: italic;
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c53030;
+        }
+        .success-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="{{ url_for('home') }}">🏠 Home</a>
+            <a href="{{ url_for('products_list') }}">📦 All Products</a>
+            <a href="{{ url_for('categories') }}">🏷️ Categories</a>
+        </nav>
+
+        <div class="breadcrumb">
+            Category: <span>{{ category_name | capitalize }}</span> > Product ID: <span>{{ product_id }}</span>
+        </div>
+
+        <div class="category-badge">{{ category_name | capitalize }}</div>
+        
+        <h1>{{ success_icon }} Product Details</h1>
+
+        {% if product %}
+            <div class="product-details">
+                <div class="detail-row">
+                    <span class="detail-label">Product ID:</span>
+                    <span class="detail-value">{{ product_id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Product Name:</span>
+                    <span class="detail-value">{{ product.name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Category:</span>
+                    <span class="detail-value" style="text-transform: capitalize;">{{ category_name }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Price:</span>
+                    <span class="detail-value price">₹{{ "{:,.2f}".format(product.price) }}</span>
+                </div>
+                <div class="description">
+                    <strong>📝 Description:</strong> {{ product.description }}
+                </div>
+            </div>
+        {% else %}
+            <div class="error-message">
+                ❌ <strong>Product not found!</strong><br>
+                The product with ID {{ product_id }} does not exist in the {{ category_name | capitalize }} category.
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
