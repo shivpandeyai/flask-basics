@@ -84,38 +84,19 @@
             <a href="/grades">Grades</a>
         </nav>
 
-        <h1>My Skills</h1>
-        <p>This page demonstrates <strong>Jinja2 for loops</strong> - iterating over a list!</p>
+       
 
-        <!-- Display skills as badges using a for loop -->
-        <div class="skills-container">
-            {% for skill in skills %}
-                <span class="skill-badge">{{ skill }}</span>
-            {% endfor %}
-        </div>
+<h1> My Grades</h1>
+        <p>This page demonstrates <strong>my grades</strong> in all subjects !</p>
+        <!-- Display subjects and grades in a table using a for loop -->
 
-        <div class="loop-info">
-            <strong>The for loop in action!</strong>
-            <p>The badges above are generated dynamically. In Python, we passed:</p>
-            <code>skills = ['Python', 'HTML', 'CSS', 'JavaScript', 'Flask']</code>
-        </div>
-
-        <h2>Skills as a List</h2>
         <ul class="skill-list">
-            {% for skill in skills %}
+            {% for subject, grade in subjects_grades.items() %}
                 <li>
-                    <strong>{{ loop.index }}.</strong> {{ skill }}
-                    {% if loop.first %}
-                        <em>(First skill!)</em>
-                    {% endif %}
-                    {% if loop.last %}
-                        <em>(Last skill!)</em>
-                    {% endif %}
+                    <strong>{{ subject }}:</strong> {{ grade }}
                 </li>
             {% endfor %}
         </ul>
-
-
 
 
         <h2>How For Loops Work</h2>
